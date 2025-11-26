@@ -33,34 +33,6 @@ app.get("/", (req, res) => {
   });
 });
 
-// Session routes
-// POST /api/sessions
-app.post("/api/sessions", async (req, res) => {
-  try {
-    // Create new session from request body
-    const newSession = new Session(req.body);
-
-    // Save to database
-    const savedSession = await newSession.save();
-
-    // Send back the saved book
-    res.status(201).json(savedSession);
-  } catch (error) {
-    // Handle validation errors
-    res.status(400).json({ message: error.message });
-  }
-});
-// GET /api/sessions
-app.get("/api/sessions", async (req, res) => {
-  try {
-    const sessions = await Session.find().populate('taskId');
-    res.json(sessions);
-  } catch (error) {
-    // Handle validation errors
-    res.status(400).json({ message: error.message });
-  }
-})
-
 // Health check
 app.get("/health", (req, res) => {
   res.json({ status: "OK", timestamp: new Date() });
